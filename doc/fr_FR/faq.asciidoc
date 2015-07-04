@@ -1,0 +1,5 @@
+[panel,primary]
+.Je clique sur le bouton et rien ne se passe
+--
+Vérifiez bien vos paramètres d'adresse, de port et d'authentification
+--
