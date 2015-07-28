@@ -28,6 +28,10 @@ class dlControl extends eqLogic {
 
     /*     * *********************Methode d'instance************************* */
 
+	public function logMessage($_msg, $_level = 'debug') {
+		log::add('dlControl', $_level, $_msg, 'config');
+	}
+	
     public function preUpdate() {
         
 		/*if ($this->getConfiguration('addrsab') == '') {
@@ -40,7 +44,7 @@ class dlControl extends eqLogic {
     }
 	
 	public function getGroups() {
-       return array('sab','transmission','nzbget','rutorrent');
+       return array('sab','transmission','nzbget','rutorrent', 'dsdownload');
     }
 	
 	public function commandByName($name) {
@@ -127,6 +131,11 @@ class dlControl extends eqLogic {
         } else {
             $this->removeCommands('nzbget');
         }
+		if ($this->getConfiguration('has_dsdownload') == 1) {
+			$this->addCommands('dsdownload');
+		} else {
+			$this->removeCommands('dsdownload');
+		}
     }
 	
     public function postSave() {
@@ -249,6 +258,125 @@ class dlControl extends eqLogic {
 		
    }
    
+    public function executeAction($_request = null, $_command = null) {
+		$controlIp = $this->getConfiguration('addr' . $_request);
+		$controlPort = $this->getConfiguration('port' . $_request);
+		
+		if ($_request == 'sabnzbd') {
+				$sabkey = $dlControl->getConfiguration('keysabnzbd');
+				$sabport = $dlControl->getConfiguration('portsabnzbd');
+				$url='http://' . $controlIp . ':' . $controlPort . '/sabnzbd/api?mode=' . $_command . '&apikey=' .$sabkey;
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$result=curl_exec($ch);
+				curl_close($ch);
+				if (substr($result,0,2) != 'ok'){
+					throw new Exception(__($result,__FILE__));
+				}
+		}
+		if ($_request == 'nzbget') {
+				$nzbgetuser = $dlControl->getConfiguration('usernzbget');
+				$nzbgetpass = $dlControl->getConfiguration('passnzbget');
+				$url='http://' . $controlIp . ':' . $controlPort . '/' . $nzbgetuser . ':' . $nzbgetpass . '/jsonprpc/'. $_command;
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$result=curl_exec($ch);
+				curl_close($ch);
+		}
+		if ($_request == 'rutorrent') {
+				$rutorrentuser = $dlControl->getConfiguration('userrutorrent');
+				$rutorrentpass = $dlControl->getConfiguration('passrutorrent');
+				
+		}
+		if ($_request == 'transmission') {
+				$transmissionuser = $dlControl->getConfiguration('usertransmission');
+				$transmissionpass = $dlControl->getConfiguration('passtransmission');
+				$transmissionpath = $dlControl->getConfiguration('pathtransmission');
+				if ($transmissionpath==''){
+					$transmissionpath='/transmission/rpc';
+				}
+				shell_exec('/usr/bin/python ' . $dlControl_path . '/transmission.py ' . $controlIp . ' ' . $controlPort . ' ' . $_command . ' ' . $transmissionpath . ' ' . $transmissionuser . ' ' . $transmissionpass);
+		}
+		if ($_request == 'dsdownload') {
+			$dsdownloaduser = $this->getConfiguration('userdsdownload');
+			$dsdownloadpass = $this->getConfiguration('passdsdownload');
+			
+			//Get SYNO.API.Auth Path and SYNO.DownloadStation.Task Path
+			// $url='http://' . $controlIp . ':' . $controlPort . '/webapi/query.cgi?api=SYNO.API.Info&version=1&method=query&query=SYNO.API.Auth,SYNO.DownloadStation.Task';
+			// $result = $this->getJsonWithCookie($url, $ckfile);
+			// $authPath = $result['data']['SYNO.API.Auth']['path'];
+			// $this->logMessage('SYNO.API.Auth :' . $authPath);
+			// $dsTaskPath = $result['data']['SYNO.DownloadStation.Task']['path'];
+			// $this->logMessage('SYNO.DownloadStation.Task :' . $dsTaskPath);
+			
+			// Create temporary cookie
+			$ckfile = tempnam ("/tmp", "CURLCOOKIE");
+			// login
+			$url='http://' . $controlIp . ':' . $controlPort . '/webapi/auth.cgi?api=SYNO.API.Auth&version=3&method=login&account=' . $dsdownloaduser . '&passwd=' . $dsdownloadpass . '&session=DownloadStation&format=cookie';
+			$result = $this->getJsonWithCookie($url, $ckfile, true);
+			
+			if ($result['success']) {
+				$sid = $result['data']['sid'];
+				$this->logMessage('syno auth OK. SID :' . $sid);
+
+				// Apply resume on paused and pause on waiting/downloading
+				$url='http://' . $controlIp . ':' . $controlPort . '/webapi/DownloadStation/task.cgi?api=SYNO.DownloadStation.Task&version=1&method=list&sid=' . $sid;
+				$result = $this->getJsonWithCookie($url, $ckfile);
+				if ($result['success']) {
+					$this->logMessage('list total: ' . $result['data']['total']);
+				} else {
+					$this->logMessage('list total failed : ' . $result['error']['code']);
+				}
+				
+				$ids = array();
+				$tasks = $result['data']['tasks'];
+				if(count($tasks) > 0){
+					if($_command == 'pause') {
+						for ($i = 0; $i < count($tasks); $i++) {
+							if ($tasks[$i]['status'] == 'waiting' || $tasks[$i]['status'] == 'downloading' || ($tasks[$i]['status'] == 'seeding' && $this->getConfiguration('pause_ds_sending')) ) {
+								$ids[] = $tasks[$i]['id'];
+							}
+						}
+					} else if ($command == 'resume') {
+						for ($i = 0; $i < count($tasks); $i++) {
+							if ($tasks[$i]['status'] == 'paused') {
+								$ids[] = $tasks[$i]['id'];
+							}
+						}
+					}
+				}
+				$this->logMessage('test: ' . implode (", ", $ids));
+				
+				$url='http://' . $controlIp . ':' . $controlPort . '/webapi/DownloadStation/task.cgi?api=SYNO.DownloadStation.Task&version=3&method=' . $_command . '&id=' . implode (", ", $ids) . '&sid=' . $sid;
+				$result = $this->getJsonWithCookie($url, $ckfile);
+				
+				// logout
+				$url='http://' . $controlIp . ':' . $controlPort . '/webapi/auth.cgi?api=SYNO.API.Auth&method=logout&version=3&session=DownloadStation';
+				$result = $this->getJsonWithCookie($url, $ckfile);
+			}
+		}
+	}
+   
+	public function getJsonWithCookie($_url = null, $_ckfile = null, $_auth = false) {
+		$data = null;
+		if($_url && $_ckfile) {
+			$ch = curl_init($_url);
+			curl_setopt($ch, CURLOPT_COOKIESESSION, true);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			if($_auth){
+				curl_setopt ($ch, CURLOPT_COOKIEJAR, $_ckfile);
+			} else {
+				curl_setopt ($ch, CURLOPT_COOKIEFILE, $_ckfile);
+			}
+			$data=curl_exec($ch);
+			curl_close($ch);
+		}
+		$result = json_decode($data, true);
+		if (!$result['success']) {
+			$this->logMessage('url[ ' . $_url . '] failed on error [' . $result['error']['code'] . ']');
+		}
+		return $result;
+	}   
 }
 
 class dlControlCmd extends cmd {
@@ -264,66 +392,14 @@ class dlControlCmd extends cmd {
         if ($this->getConfiguration('request') == '') {
             throw new Exception(__('La requete ne peut etre vide',__FILE__));
 		}
-		
-		
     }
 
     public function execute($_options = null) {
     	$dlControl = $this->getEqLogic();
         $dlControl_path = realpath(dirname(__FILE__) . '/../../3rdparty');
-		if ($this->getConfiguration('request') == 'sabnzbd') {
-				$type=$this->getConfiguration('type');
-				$command=$this->getConfiguration('parameters');
-				$sabip = $dlControl->getConfiguration('addrsab');
-				$sabkey = $dlControl->getConfiguration('keysab');
-				$sabport = $dlControl->getConfiguration('portsab');
-				$url='http://' . $sabip . ':' . $sabport . '/sabnzbd/api?mode=' . $command . '&apikey=' .$sabkey;
-				$ch = curl_init($url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				$result=curl_exec($ch);
-				curl_close($ch);
-				if (substr($result,0,2) != 'ok'){
-					throw new Exception(__($result,__FILE__));
-				}
-		}
-		if ($this->getConfiguration('request') == 'nzbget') {
-				$type=$this->getConfiguration('type');
-				$command=$this->getConfiguration('parameters');
-				$nzbgetip = $dlControl->getConfiguration('addrnzbget');
-				$nzbgetuser = $dlControl->getConfiguration('usernzbget');
-				$nzbgetpass = $dlControl->getConfiguration('passnzbget');
-				$nzbgetport = $dlControl->getConfiguration('portnzbget');
-				$url='http://' . $nzbgetip . ':' . $nzbgetport . '/' . $nzbgetuser . ':' . $nzbgetpass . '/jsonprpc/'. $command;
-				$ch = curl_init($url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				$result=curl_exec($ch);
-				curl_close($ch);
-		}
-		if ($this->getConfiguration('request') == 'rutorrent') {
-				$type=$this->getConfiguration('type');
-				$command=$this->getConfiguration('parameters');
-				$rutorrentip = $dlControl->getConfiguration('addrrutorrent');
-				$rutorrentuser = $dlControl->getConfiguration('userrutorrent');
-				$rutorrentpass = $dlControl->getConfiguration('passrutorrent');
-				$rutorrentport = $dlControl->getConfiguration('portrutorrent');
-				
-		}
-		if ($this->getConfiguration('request') == 'transmission') {
-				$type=$this->getConfiguration('type');
-				$command=$this->getConfiguration('parameters');
-				$transmissionip = $dlControl->getConfiguration('addrtransmission');
-				$transmissionuser = $dlControl->getConfiguration('usertransmission');
-				$transmissionpass = $dlControl->getConfiguration('passtransmission');
-				$transmissionport = $dlControl->getConfiguration('porttransmission');
-				$transmissionpath = $dlControl->getConfiguration('pathtransmission');
-				if ($transmissionpath==''){
-					$transmissionpath='/transmission/rpc';
-				}
-				shell_exec('/usr/bin/python ' . $dlControl_path . '/transmission.py ' .$transmissionip . ' ' . $transmissionport . ' ' . $command . ' ' . $transmissionpath . ' ' . $transmissionuser . ' ' . $transmissionpass);
-		}
-    }
 		
-
+		$dlControl->executeAction($this->getConfiguration('request'), $this->getConfiguration('parameters'));
+    }
 
     /*     * **********************Getteur Setteur*************************** */
 }

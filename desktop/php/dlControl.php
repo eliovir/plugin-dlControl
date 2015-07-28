@@ -102,67 +102,94 @@ $eqLogics = eqLogic::byType('dlControl');
 						<label class="checkbox-inline">
                             <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_nzbget"/> Nzbget
                         </label>
+						<label class="checkbox-inline">
+                            <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_dsdownload"/> DSDownload
+                        </label>
 					</div>
                 </div>
 				<div class="sab">
 					<label class="col-lg-1 control-label">{{Sabnzbd : }}</label>
-				<div class="form-group">
-                    <label class="col-lg-1 control-label">{{IP}}</label>
-                    <div class="col-lg-2">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrsab" placeholder="{{Adresse IP SAB}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{Port}}</label>
-					 <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portsab" placeholder="{{Port SAB}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{API}}</label>
-                    <div class="col-lg-3">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="keysab" placeholder="{{Clé API SAB}}"/>
-                    </div>
-                </div>
+					<div class="form-group">
+						<label class="col-lg-1 control-label">{{IP}}</label>
+						<div class="col-lg-2">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrsabnzbd" placeholder="{{Adresse IP SAB}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Port}}</label>
+						 <div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portsabnzbd" placeholder="{{Port SAB}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{API}}</label>
+						<div class="col-lg-3">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="keysabnzbd" placeholder="{{Clé API SAB}}"/>
+						</div>
+					</div>
 				</div>
 				<div class="nzbget">
 					<label class="col-lg-1 control-label">{{Nzbget : }}</label>
-				<div class="form-group">
-                    <label class="col-lg-1 control-label">{{IP}}</label>
-                    <div class="col-lg-2">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrnzbget" placeholder="{{Adresse IP nzbget}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{Port}}</label>
-                    <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portnzbget" placeholder="{{Port nzbget}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{User}}</label>
-                    <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="usernzbget" placeholder="{{User nzbget}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{Pass}}</label>
-                    <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="passnzbget" placeholder="{{Mot de passe nzbget}}"/>
-                    </div>
+					<div class="form-group">
+						<label class="col-lg-1 control-label">{{IP}}</label>
+						<div class="col-lg-2">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrnzbget" placeholder="{{Adresse IP nzbget}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Port}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portnzbget" placeholder="{{Port nzbget}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{User}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="usernzbget" placeholder="{{User nzbget}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Pass}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="passnzbget" placeholder="{{Mot de passe nzbget}}"/>
+						</div>
+					</div>
                 </div>
+				<div class="dsdownload">
+					<label class="col-lg-1 control-label">{{DSDownload : }}</label>
+					<div class="form-group">
+						<label class="col-lg-1 control-label">{{IP}}</label>
+						<div class="col-lg-2">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrdsdownload" placeholder="{{Adresse IP DSDownload}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Port}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portdsdownload" placeholder="{{Port DSDownload}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{User}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="userdsdownload" placeholder="{{User DSDownload}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Pass}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="passdsdownload" placeholder="{{Mot de passe DSDownload}}"/>
+						</div>
+						<div class="col-lg-1">
+							<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Seed pause}}" data-l1key="configuration" data-l2key="pause_ds_sending" checked/>
+						</div>
+					</div>
                 </div>
 				<div class="transmission">
 					<label class="col-lg-1 control-label">{{Transmission: }}</label>
-				<div class="form-group">
-                    <label class="col-lg-1 control-label">{{IP}}</label>
-                    <div class="col-lg-2">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrtransmission" placeholder="{{Adresse IP transmission}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{Port}}</label>
-                    <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="porttransmission" placeholder="{{Port transmission}}"/>
-                    </div>
-					<label class="col-lg-1 control-label">{{User}}</label>
-                    <div class="col-lg-1">
-                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="usertransmission" placeholder="{{User transmission}}"/>
-                    </div>
-                </div>
-				<label class="col-lg-2 control-label">{{Pass}}</label>
+					<div class="form-group">
+						<label class="col-lg-1 control-label">{{IP}}</label>
+						<div class="col-lg-2">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addrtransmission" placeholder="{{Adresse IP transmission}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{Port}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="porttransmission" placeholder="{{Port transmission}}"/>
+						</div>
+						<label class="col-lg-1 control-label">{{User}}</label>
+						<div class="col-lg-1">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="usertransmission" placeholder="{{User transmission}}"/>
+						</div>
+					</div>
+					<label class="col-lg-2 control-label">{{Pass}}</label>
                     <div class="col-lg-2">
                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="passtransmission" placeholder="{{Mot de passe transmission}}"/>
 					</div>
-				<label class="col-lg-1 control-label">{{Path}}</label>
+					<label class="col-lg-1 control-label">{{Path}}</label>
                     <div class="col-lg-2">
                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="pathtransmission" placeholder="{{Laisser vide pour par défaut}}"/>
                     </div>
