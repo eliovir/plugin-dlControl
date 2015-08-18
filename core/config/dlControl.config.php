@@ -113,6 +113,30 @@ $listCmddlControl = array(
         'description' => 'Enlever la pause de Nzbget',
 		'group' => 'nzbget',
 		'icon' => 'fa fa-play',
+    ),
+	array(
+        'name' => 'Pause DSDownload',
+        'configuration' => array(
+            'request' => 'dsdownload',
+            'parameters' => 'pause',
+        ),
+        'type' => 'action',
+        'subType' => 'other',
+        'description' => 'Mettre en pause DSDownload',
+		'group' => 'dsdownload',
+		'icon' => 'fa fa-pause',
+    ),
+    array(
+        'name' => 'Resume DSDownload',
+        'configuration' => array(
+            'request' => 'dsdownload',
+            'parameters' => 'resume',
+        ),
+        'type' => 'action',
+        'subType' => 'other',
+        'description' => 'Enlever la pause de DSDownload',
+		'group' => 'dsdownload',
+		'icon' => 'fa fa-play',
     )
 );
 ?>

@@ -1,4 +1,5 @@
 ==== 22/02/2015
 
 - V0.1: Première version avec Transmission Sabnzbd et Nzbget
+- V0.2 : Ajout de DS Download
 
