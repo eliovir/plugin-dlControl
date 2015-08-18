@@ -161,6 +161,8 @@ class dlControl extends eqLogic {
 			'#name#' => ($this->getIsEnable()) ? $this->getName() : '<del>' . $this->getName() . '</del>',
 			'#eqLink#' => $this->getLinkToConfiguration(),
 			'#action#' => (isset($action)) ? $action : '',
+            '#height#' => $this->getDisplay('height', 'auto'),
+            '#width#' => $this->getDisplay('width', '330px'),
 			'#background_color#' => $this->getBackgroundColor($_version),
 		);
 		

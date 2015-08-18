@@ -30,9 +30,9 @@ $eqLogics = eqLogic::byType('dlControl');
         <div class="eqLogicThumbnailContainer">
                       <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
            <center>
-            <i class="fa fa-plus-circle" style="font-size : 7em;color:#28a3d3;"></i>
+            <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
         </center>
-        <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;;color:#28a3d3"><center>Ajouter</center></span>
+        <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;;color:#94ca02"><center>Ajouter</center></span>
     </div>
          <?php
                 foreach ($eqLogics as $eqLogic) {
@@ -93,21 +93,14 @@ $eqLogics = eqLogic::byType('dlControl');
 				<div class="form-group">				
                     <label class="col-lg-2 control-label">{{Logiciels du groupe}}</label>
 					<div class="col-lg-8">
-						<label class="checkbox-inline">
-                            <input type="checkbox" id="sabcheck" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_sab"/> Sabnzbd
-                        </label>
-						<label class="checkbox-inline">
-                            <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_transmission"/> Transmission
-                        </label>
-						<label class="checkbox-inline">
-                            <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_nzbget"/> Nzbget
-                        </label>
-						<label class="checkbox-inline">
-                            <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="has_dsdownload"/> DSDownload
-                        </label>
+                 <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Sabnzbd}}" data-l1key="configuration" data-l2key="has_sab" onchange="if(this.checked == true){document.getElementById('sab').style.display = 'block';} else {document.getElementById('sab').style.display = 'none';}"  checked/>
+                  <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Transmission}}" data-l1key="configuration" data-l2key="has_transmission" onchange="if(this.checked == true){document.getElementById('transmission').style.display = 'block';} else {document.getElementById('transmission').style.display = 'none';}"  checked/>
+                  <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Nzbget}}" data-l1key="configuration" data-l2key="has_nzbget" onchange="if(this.checked == true){document.getElementById('nzbget').style.display = 'block';} else {document.getElementById('nzbget').style.display = 'none';}"  checked/>
+                  <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Dsdownload}}" data-l1key="configuration" data-l2key="has_dsdownload" onchange="if(this.checked == true){document.getElementById('dsdownload').style.display = 'block';} else {document.getElementById('dsdownload').style.display = 'none';}"  checked/>
+                
 					</div>
                 </div>
-				<div class="sab">
+				<div class="sab" id="sab">
 					<label class="col-lg-1 control-label">{{Sabnzbd : }}</label>
 					<div class="form-group">
 						<label class="col-lg-1 control-label">{{IP}}</label>
@@ -124,7 +117,7 @@ $eqLogics = eqLogic::byType('dlControl');
 						</div>
 					</div>
 				</div>
-				<div class="nzbget">
+				<div class="nzbget" id="nzbget">
 					<label class="col-lg-1 control-label">{{Nzbget : }}</label>
 					<div class="form-group">
 						<label class="col-lg-1 control-label">{{IP}}</label>
@@ -145,7 +138,7 @@ $eqLogics = eqLogic::byType('dlControl');
 						</div>
 					</div>
                 </div>
-				<div class="dsdownload">
+				<div class="dsdownload" id="dsdownload">
 					<label class="col-lg-1 control-label">{{DSDownload : }}</label>
 					<div class="form-group">
 						<label class="col-lg-1 control-label">{{IP}}</label>
@@ -169,7 +162,7 @@ $eqLogics = eqLogic::byType('dlControl');
 						</div>
 					</div>
                 </div>
-				<div class="transmission">
+				<div class="transmission" id="transmission">
 					<label class="col-lg-1 control-label">{{Transmission: }}</label>
 					<div class="form-group">
 						<label class="col-lg-1 control-label">{{IP}}</label>
