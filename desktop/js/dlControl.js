@@ -66,7 +66,7 @@ function addCmdToTable(_cmd) {
 	tr += '<a class="btn btn-default listCmddlControl form-control input-sm" style="margin-top : 5px;"><i class="fa fa-list-alt cursor"></i> {{Ajouter une commande prédéfinie}}</a>';
     tr += '</td>';
     tr += '<td>';
-    tr += '<span><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/> {{Afficher}}<br/></span>';
+     tr += '<span><input type="checkbox" data-size="mini" data-label-text="{{Afficher}}" class="cmdAttr bootstrapSwitch" data-l1key="isVisible" checked/></span> ';
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {

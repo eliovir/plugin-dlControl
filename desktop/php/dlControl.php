@@ -36,7 +36,11 @@ $eqLogics = eqLogic::byType('dlControl');
     </div>
          <?php
                 foreach ($eqLogics as $eqLogic) {
-                    echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
+                    $opacity = '';
+                    if ($eqLogic->getIsEnable() != 1) {
+                        $opacity = 'opacity:0.3;';
+                    }
+                    echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
                     echo "<center>";
                     echo '<img src="plugins/dlControl/doc/images/dlControl_icon.png" height="105" width="95" />';
                     echo "</center>";
@@ -202,6 +206,7 @@ $eqLogics = eqLogic::byType('dlControl');
                     <th style="width: 200px;">{{Nom}}</th>
                     <th style="width: 100px;">{{Type}}</th>
                     <th>{{Parametre(s)}}</th>
+                    <th>{{Options}}</th>
                     <th style="width: 100px;"></th>
                 </tr>
             </thead>
