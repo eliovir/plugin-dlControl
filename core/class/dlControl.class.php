@@ -263,10 +263,10 @@ class dlControl extends eqLogic {
     public function executeAction($_request = null, $_command = null) {
 		$controlIp = $this->getConfiguration('addr' . $_request);
 		$controlPort = $this->getConfiguration('port' . $_request);
-		
+		$dlControl_path = realpath(dirname(__FILE__) . '/../../3rdparty');
 		if ($_request == 'sabnzbd') {
-				$sabkey = $dlControl->getConfiguration('keysabnzbd');
-				$sabport = $dlControl->getConfiguration('portsabnzbd');
+				$sabkey = $this->getConfiguration('keysabnzbd');
+				$sabport = $this->getConfiguration('portsabnzbd');
 				$url='http://' . $controlIp . ':' . $controlPort . '/sabnzbd/api?mode=' . $_command . '&apikey=' .$sabkey;
 				$ch = curl_init($url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -277,8 +277,8 @@ class dlControl extends eqLogic {
 				}
 		}
 		if ($_request == 'nzbget') {
-				$nzbgetuser = $dlControl->getConfiguration('usernzbget');
-				$nzbgetpass = $dlControl->getConfiguration('passnzbget');
+				$nzbgetuser = $this->getConfiguration('usernzbget');
+				$nzbgetpass = $this->getConfiguration('passnzbget');
 				$url='http://' . $controlIp . ':' . $controlPort . '/' . $nzbgetuser . ':' . $nzbgetpass . '/jsonprpc/'. $_command;
 				$ch = curl_init($url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -286,14 +286,14 @@ class dlControl extends eqLogic {
 				curl_close($ch);
 		}
 		if ($_request == 'rutorrent') {
-				$rutorrentuser = $dlControl->getConfiguration('userrutorrent');
-				$rutorrentpass = $dlControl->getConfiguration('passrutorrent');
+				$rutorrentuser = $this->getConfiguration('userrutorrent');
+				$rutorrentpass = $this->getConfiguration('passrutorrent');
 				
 		}
 		if ($_request == 'transmission') {
-				$transmissionuser = $dlControl->getConfiguration('usertransmission');
-				$transmissionpass = $dlControl->getConfiguration('passtransmission');
-				$transmissionpath = $dlControl->getConfiguration('pathtransmission');
+				$transmissionuser = $this->getConfiguration('usertransmission');
+				$transmissionpass = $this->getConfiguration('passtransmission');
+				$transmissionpath = $this->getConfiguration('pathtransmission');
 				if ($transmissionpath==''){
 					$transmissionpath='/transmission/rpc';
 				}
