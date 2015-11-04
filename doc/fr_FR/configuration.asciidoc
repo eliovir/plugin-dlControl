@@ -16,6 +16,8 @@ Le plus important est de choisir les logiciels que vous vouulez ajouter à votre
 Lorsque vous aves choisi les éléments de votre groupe et sauvegarder les commandes sont automatiquement créées.
 
 Pour l'instant uniquement un pause et un resume pour chaque logiciel. Cela vous permettra de créer des scénarios , ou des agendas afin :
-de mettre en pause quand la tv est allumé, de mettre en pause entre 18h et 20h enfin ce que vous voulez.
+de mettre en pause quand la tv est allumé, 
+de mettre en pause entre 18h et 20h 
+enfin ce que vous voulez.
 
 
