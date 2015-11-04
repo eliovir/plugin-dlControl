@@ -138,15 +138,6 @@ class dlControl extends eqLogic {
 		}
     }
 	
-    public function postSave() {
-	}
-    
-
-	public function postInsert() {
-	   
-    
-    }
-	
 	public function toHtml($_version = 'dashboard') {
 		if ($this->getIsEnable() != 1) {
             return '';
