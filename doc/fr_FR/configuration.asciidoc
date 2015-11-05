@@ -1,23 +1,24 @@
-Le plugin dlControl permet de controller ses logiciels de téléchargements. 
+Le plugin dlControl permet de contrôler ses logiciels de téléchargements. 
 
-Une fois installé à partir du Market, puis une fois activé, on accède à la page du plugin dlControl dans le menu Plugin->Multimédia.
+Une fois le plugin installé à partir du Market et activé, on accède à la configuration du plugin dlControl dans le menu Plugin->Multimédia.
 
-A gauche, la liste des groupes déjà créés (vierge lors de la première installation), et au centre l'onglet Général & liste des groupes.
+À gauche, la liste des groupes déjà créés (vierge lors de la première installation), et au centre l'onglet Général & liste des groupes.
 
 Pour créer un nouveau groupe, il suffit de cliquer sur "Ajouter un groupe" dans le menu de gauche. Il est possible de créer plusieurs groupes.
 
 Un groupe peut contenir plusieurs logiciels de téléchargements. J'ai utilisé cette notion de groupe pour vous donner le choix de regrouper vos différents logiciels,
-généralement 2 (un pour les tor.. et un pour les news) sur  un même tuile ou non.
+généralement 2 (un pour les tor.. et un pour les news) sur une même tuile ou non.
 
 L'onglet Général permet de donner un nom, activer et rendre visible le groupe, puis configurer ce dernier.
 
-Le plus important est de choisir les logiciels que vous vouulez ajouter à votre groupe et de configurer l'adresse IP , le port et les paramètres d'authentification
+Le plus important est de choisir les logiciels que vous voulez ajouter à votre groupe et de configurer l'adresse IP , le port et les paramètres d'authentification.
 
-Lorsque vous aves choisi les éléments de votre groupe et sauvegarder les commandes sont automatiquement créées.
+Lorsque vous avez choisi les éléments de votre groupe et sauvegardé, les commandes sont automatiquement créées.
 
-Pour l'instant uniquement un pause et un resume pour chaque logiciel. Cela vous permettra de créer des scénarios , ou des agendas afin :
-de mettre en pause quand la tv est allumé, 
-de mettre en pause entre 18h et 20h 
-enfin ce que vous voulez.
+Pour l'instant uniquement un pause et un resume pour chaque logiciel. Cela vous permettra de créer des scénarios, ou des agendas afin :
+
+* de mettre en pause quand la tv est allumé, 
+* de mettre en pause entre 18h et 20h,
+* enfin ce que vous voulez.
 
 
